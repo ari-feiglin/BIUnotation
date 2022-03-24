@@ -1,0 +1,119 @@
+\documentclass[10pt]{article}
+
+\usepackage{biunotation}
+\usepackage[margin=2cm]{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+}
+
+\definecolor{beige}{RGB}{250,200,150}
+
+\def\BiU{B\kern-0.1em\lower0.3em\hbox{I}\kern-0.1emU}
+
+\def\com#1{\texttt{\detokenize{#1}\kern-1ex}}
+\def\Aparam#1{$\left\{\left<\textsl{#1}\right>\right\}$}
+\def\Bparam#1{$\left[\left<\textsl{#1}\right>\right]$}
+
+\def\repolink{https://github.com/ari-feiglin/BIUnotation.git}
+\def\refrepo#1{\href{\repolink}{#1}}
+
+\makeatletter
+\def\param{\@ifstar\Bparam\Aparam}
+\makeatother
+
+\def\showcase#1{\setbox0=\hbox{\tt Scriptscript style:}
+    \begin{itemize} 
+        \item \leavevmode\hbox to \wd0{\tt Display style:\hfil}       $\displaystyle #1$
+        \item \leavevmode\hbox to \wd0{\tt Text style:\hfil}          $\textstyle #1$
+        \item \leavevmode\hbox to \wd0{\tt Script style:\hfil}        $\scriptstyle #1$
+        \item \leavevmode\hbox to \wd0{\tt Scriptscript style:\hfil}  $\scriptscriptstyle #1$
+    \end{itemize}
+}
+
+\begin{document}
+
+\setcounter{tocdepth}{3}
+\tableofcontents
+\newpage
+
+\section{Overview}
+
+\BiU-notation is a package for typesetting unique/esoteric mathematical notation used by lecturers in Bar Ilan University.
+
+The package is intended to be independent, as in it does not require any other package installations and can be used in plain-\TeX (with the removal of La\TeX macros that are necessary for La\TeX packages).
+
+Any suggestions/issues should be made to the \refrepo{github repository}.
+
+\subsection{Installation}
+
+If you're using an online La\TeX editor like \href{https://www.overleaf.com}{overleaf}, then just upload the \href{run:./biunotation.sty}{biunotation.sty} file to your project, and skip to \textbf{Step 3}. The other steps require you to have La\TeX installed locally (or Lyx).
+
+\noindent\textbf{Step 1}:\par
+{\advance\leftskip1cm\parindent=0pt
+The first step is to somehow download \href{run:./biunotation.sty}{biunotation.sty}. 
+
+This can be done by cloning \refrepo{this repository}. This can be done on the command line (assuming {\tt git} is installed) with \par
+\vskip1ex\hfil\colorbox{black}{\textcolor{green}{\$} \textcolor{gray}{\tt git clone \repolink\ /path/to/destination}}\hfil\par\vskip1ex
+So for example:\par
+\vskip1ex\hfil\colorbox{black}{\textcolor{green}{\$} \textcolor{gray}{\tt git clone \repolink\ $\sim$/Downloads}}\hfil\par\vskip1ex
+Will create a directory called {\tt biunotation} in {\tt ~/Downloads} with the repository.\par
+}
+
+\noindent\textbf{Step 2}:\par
+{\advance\leftskip1cm\parindent=0pt
+Now we must move the correct file to the correct directory. First locate {\tt biunotation.sty}. If you cloned the repository into your current directory, it can be found at {\tt ./biunotation/biunotation.sty}.
+
+If you'd like to only use this package once, then move {\tt biunotation.sty} to the same directory as your {\tt .tex} file (or {\tt .lyx} file if you're using Lyx).
+
+If you'd like to use this package multiple times, move it to {\tt ~/texmf} (if it doesn't exist, create it).\par
+}
+
+\noindent\textbf{Step 3}:\par
+{\advance\leftskip1cm\parindent=0pt
+In your {\tt .tex} file, in its preamble (before {\tt \detokenize{\begin}\kern-1ex\{document\}} but after {\tt\detokenize{\documentclass}...}), put 
+
+\hfil\colorbox{beige}{\hbox to 10cm{\tt\textcolor{blue}{\detokenize{\usepackage}\kern-1pt}\{biunotation\}}}\hfil
+
+If you are using Lyx, go to {\tt Document > Settings > ... > LaTeX Preamble} and paste the above command.\par
+}
+
+\newpage
+\section{Macros}
+\subsection{Symbols}
+\subsubsection{Mathmode Symbols}
+
+\begin{itemize}
+
+    \item \com{\dcup}: A \textsl{binary operator} that is an alternative method of denoting \href{https://en.wikipedia.org/wiki/Disjoint_union}{disjoint unions} (an alternative is $\sqcup$). \showcase{A\dcup B}
+    \item \com{\bigdcup}: The \textsl{large operator} brother of \com{\dcup}. \showcase{\bigdcup_{i=1}^\infty A_i}
+    \item \com{\indep}: A \textsl{binary relation}\footnote{This is not defined as a binary relation but should nevertheless be used as one} that is an alternative method of denoting \href{https://en.wikipedia.org/wiki/Independence_(probability_theory)}{independence} (an alternative is $\perp$). \showcase{A\indep B}
+
+\end{itemize}
+
+\subsubsection{Textmode Symbols}
+
+\begin{itemize}
+
+    \item \com{\pp}: (You have a smol one)
+
+\end{itemize}
+
+\newpage
+\subsection{Symbol Creation Macros}
+
+These are macros used for creating new symbols.
+
+\begin{itemize}
+
+    \item \com{\putsym}\param{primary}\param{secondary}: Places the \textsl{secondary} symbol over the \textsl{primary} symbol.\footnote{In order to allow you to worry about extra space around \textsl{primary}, it becomes a \textsl{ordinary} math symbol.} 
+        \par\leavevmode\hbox{\vbox{\hbox{\colorbox{beige}{\tt \detokenize{$\putsym{\cup}{\cdot}$}}}\hbox{\colorbox{beige}{\tt \detokenize{$\putsym{\triangle}{*}$}}}}\kern10pt\vbox{\hbox{$\putsym{\cup}{\cdot}$}\hbox{$\putsym{\triangle}{*}$}}}
+\end{itemize}
+
+
+\end{document}
+

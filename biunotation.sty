@@ -1,0 +1,43 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{biunotation}
+
+%								 BIU Notation
+% 							    Ari Feiglin, March 2022
+%
+% This Package provides notation used during lectures at Bar Ilan University whose LaTeX/TeX macros were not found (and I therefore assume do not exist)
+%
+% A quick overview of Mathematical symbols:
+%
+% + \dcup, \bigdcup : represent disjoint unions, \dcup acts like \cup and \bigdcup acts similar to \bigcup
+%		      (that is, \dcup is a binary operator while \bidcup is a larg operator)
+% + \indep          : represents independence (in probability), an alternative to \perp
+
+
+% ---------- Base Macros ----------
+
+% For \hDash, used to represent the independence of events in probability
+\def\hd@sh#1#2#3#4{\vbox{\hbox to #1{\hfil\vrule height #2 width #4\kern#3\vrule height #2 width #4\hfil}\hrule width #1 height #4}}
+
+% Helper macro for \putsym (see below)
+\def\@putsymhelper#1#2#3{\setbox0=\hbox{$#1\mathbin{#2}$}\mathbin{#2}\llap{\hbox to\dimexpr\wd0\relax{\hfil$#1#3$\hfil}}}
+
+% For placing mathematical symbols over one another (used to create macros like \dcup and friends)
+\def\putsym#1#2{\mathchoice{\@putsymhelper{\displaystyle}{#1}{#2}}{\@putsymhelper{\textstyle}{#1}{#2}}{\@putsymhelper{\scriptstyle}{#1}{#2}}{\@putsymhelper{\scriptscriptstyle}{#1}{#2}}}
+
+% --------- Math Symbols ------------
+
+% \dcup -> disjoint union binary operator
+\def\dcup{\mathbin{\putsym{\cup}{\cdot}}}
+
+% \bigdcup -> disjoint union large operator
+\def\bigdcup{\mathop{\putsym{\bigcup}{\cdot}}}
+
+% \indep -> independence relation (not really a relation... sorry)
+\def\indep{\,\mathchoice{\hd@sh{1.4ex}{1.2ex}{0.4ex}{0.1ex}}{\hd@sh{1.4ex}{1.2ex}{0.4ex}{0.1ex}}{\hd@sh{0.9ex}{0.78ex}{0.26ex}{0.07ex}}{\hd@sh{0.8ex}{0.67ex}{0.228ex}{0.057ex}}\,}
+
+% -------- Misc. Symbols -------------
+
+\def\pp{\setbox0=\hbox{\sf o\kern-0.2ex o}%
+\setbox1=\hbox{\sf U}%
+\leavevmode\copy0\lower\ht1\hbox{\llap{\hbox to\wd0{\hfil\unhbox1\hfil}}}}
+
